@@ -1,0 +1,19 @@
+[mysqld]
+
+default-authentication-plugin=mysql_native_password
+
+# 設定字符集utf8mb4
+character_set_server=utf8mb4
+
+log_output=FILE
+
+# 錯誤日誌路徑 & 檔名
+log_error=/var/log/mysql/error.log
+
+# 慢日誌
+slow_query_log=1
+slow_query_log_file=/var/log/mysql/slow.log
+long_query_time=5
+
+log_bin=1
+server_id=1

@@ -1,0 +1,52 @@
+## Application
+app:
+  salt: abcde12345
+  admin_password: admin
+  web_chat_base_url: http://chat.local.cs.com
+  ws_origin_white_list:
+    - "http://localhost:8080"
+    - "http://localhost:9528"
+    - "http://cms.local.cs.com"
+    - "http://chat.local.cs.com"
+
+## Disk storage
+storage:
+  driver: local
+  key: ""
+  secret: ""
+  region: ""
+  bucket: ""
+  endpoint: ""
+  base_url: "http://static.local.cs.com"
+
+## Log
+log:
+  local: true
+  level: 0
+  environment: local
+  app_name: cs
+
+## HTTP
+http:
+  mode: release
+  port: 8082
+
+# Database config
+database:
+  debug: true
+  type: mysql
+  host: localhost
+  port: 3306
+  username: root
+  password: abcd1234
+  db_name: cs
+  max_idle_connections: 25
+  max_open_connections: 25
+  max_lifetime_sec: 300
+
+# Redis config
+redis:
+  cluster_mode: false
+  addresses: "localhost:6379"
+  password:
+  db: 0

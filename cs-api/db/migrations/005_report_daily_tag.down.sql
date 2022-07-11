@@ -1,0 +1,1 @@
+drop table if exists report_daily_tag;

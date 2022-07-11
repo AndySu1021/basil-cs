@@ -1,0 +1,63 @@
+/* icon font path, required */
+$--font-path: '~element-ui/lib/theme-chalk/fonts';
+
+/* Element Chalk Variables
+-------------------------- */
+/// color|1|Brand Color|0
+$--color-primary: #304156 !default;
+/// color|1|Background Color|4
+$--color-white: #ffffff !default;
+/// color|1|Background Color|4
+$--color-black: #000000 !default;
+/// color|1|Functional Color|1
+$--color-success: #67c23a !default;
+/// color|1|Functional Color|1
+$--color-warning: #e6a23c !default;
+/// color|1|Functional Color|1
+$--color-danger: #f56c6c !default;
+/// color|1|Functional Color|1
+$--color-info: #909399 !default;
+
+@import '~element-ui/packages/theme-chalk/src/index';
+/* Customize Variables
+-------------------------- */
+// base color
+$gray: #6d8399;
+$blue: #3a71a8;
+$light-blue: #409eff;
+$red: #f56c6c;
+$pink: #e65d6e;
+$green: #67c23a;
+$tiffany: #4ab7bd;
+$yellow: #e7a856;
+$panGreen: #30b08f;
+
+// sidebar
+$menuText: #bfcbd9;
+$menuActiveText: #ffffff;
+$subMenuActiveText: #ffffff; //https://github.com/ElemeFE/element/issues/12951
+
+$menuBg: #304156;
+$menuHover: #263445;
+
+$subMenuBg: #1f2d3d;
+$subMenuHover: #001528;
+
+$sideBarWidth: 210px;
+
+// card
+$collapsible-panel-header-text: #fff;
+$collapsible-panel-header-bg: #304156;
+
+// the :export directive is the magic sauce for webpack
+// https://www.bluematador.com/blog/how-to-share-variables-between-js-and-sass
+:export {
+  menuText: $menuText;
+  menuActiveText: $menuActiveText;
+  subMenuActiveText: $subMenuActiveText;
+  menuBg: $menuBg;
+  menuHover: $menuHover;
+  subMenuBg: $subMenuBg;
+  subMenuHover: $subMenuHover;
+  sideBarWidth: $sideBarWidth;
+}

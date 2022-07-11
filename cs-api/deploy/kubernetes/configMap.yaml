@@ -1,0 +1,57 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: cs-api-conf
+  namespace: basil-cs
+data:
+  config.yaml: |-
+    ## Application
+    app:
+      salt: salt
+      admin_password: password
+      web_chat_base_url: http://localhost
+      ws_origin_white_list:
+        - "http://localhost:8080"
+        - "http://localhost:9528"
+    
+    ## Disk storage
+    storage:
+      driver: local
+      key: ""
+      secret: ""
+      region: ""
+      bucket: ""
+      endpoint: ""
+      base_url: "http://localhost/upload"
+    
+    ## Log
+    log:
+      local: true
+      level: 0
+      environment: local
+      app_name: cs
+    
+    ## HTTP
+    http:
+      mode: release
+      port: 8080
+    
+    # Database config
+    database:
+      debug: true
+      type: mysql
+      host: mysql
+      port: 3306
+      username: user
+      password: password
+      db_name: cs
+      max_idle_connections: 25
+      max_open_connections: 25
+      max_lifetime_sec: 300
+    
+    # Redis config
+    redis:
+      cluster_mode: false
+      addresses: "redis:6379"
+      password:
+      db: 0
