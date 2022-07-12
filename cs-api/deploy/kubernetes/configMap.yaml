@@ -26,10 +26,10 @@ data:
     
     ## Log
     log:
-      local: true
-      level: 0
-      environment: local
       app_name: cs
+      environment: local
+      level: 0
+      directory: ./logs
     
     ## HTTP
     http:
