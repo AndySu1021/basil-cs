@@ -88,6 +88,49 @@ services:
 #    networks:
 #      - backend
 
+  elasticsearch:
+    image: elasticsearch:7.17.5
+    container_name: cs-elasticsearch
+    restart: always
+    environment:
+      - "cluster.name=elasticsearch"
+      - "discovery.type=single-node"
+      - "ES_JAVA_OPTS=-Xms512m -Xmx1024m"
+    volumes:
+      - ./es/plugins:/usr/share/elasticsearch/plugins
+      - ./es/data:/usr/share/elasticsearch/data
+    ports:
+      - "9200:9200"
+    networks:
+      - backend
+
+  kibana:
+    image: kibana:7.17.5
+    container_name: cs-kibana
+    restart: always
+    volumes:
+      - ./kibana/conf/kibana.yml:/usr/share/kibana/config/kibana.yml
+    ports:
+      - "5601:5601"
+    privileged: true
+    networks:
+      - backend
+
+  fluent-bit:
+    image: fluent/fluent-bit:latest
+    container_name: fluent-bit
+    restart: always
+    ports:
+      - "5170:5170"
+    environment:
+      FLUENT_ELASTICSEARCH_HOST: elasticsearch
+      FLUENT_ELASTICSEARCH_PORT: 9200
+    volumes:
+      - ../cs-api/logs:/var/logs
+      - ./fluent-bit/fluent-bit.conf:/fluent-bit/etc/fluent-bit.conf
+    networks:
+      - backend
+
 networks:
   backend:
     driver: bridge

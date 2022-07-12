@@ -16,6 +16,8 @@ https://m.do.co/c/5cea3707b649
 - 基於 viper 管理配置參數
 - 基於 websocket 的聊天通信
 - 後端支援動態擴容
+- 集成 prometheus + Grafana
+- EFK 日誌系統
 - 數據庫交互方面透過 sqlc 編譯，單元測試時便於替換自定義 mock 方法
 - 後端開發架構上根據業務模組做拆分，如：./cs-api/pkg/module
 

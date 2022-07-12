@@ -4,6 +4,7 @@
 #cs-api
 /cs-api/.DS_Store
 /cs-api/upload
+/cs-api/logs
 
 #cs-web-chat
 /cs-web-chat/.DS_Store
