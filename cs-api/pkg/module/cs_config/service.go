@@ -56,7 +56,7 @@ func (s *service) UpdateCsConfig(ctx context.Context, staffId int64, config type
 
 	payload, _ := json.Marshal(event)
 
-	if err := s.redis.Publish(ctx, "event:staff", payload); err != nil {
+	if err := s.redis.Publish(ctx, types.RedisKeyEventClient, payload).Err(); err != nil {
 		return err
 	}
 

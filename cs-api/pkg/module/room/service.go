@@ -91,7 +91,7 @@ func (s *service) AcceptRoom(ctx context.Context, staffId int64, roomId int64) e
 		},
 	}
 	payload, _ := json.Marshal(event)
-	return s.redis.Publish(ctx, types.RedisKeyEventClient, payload)
+	return s.redis.Publish(ctx, types.RedisKeyEventClient, payload).Err()
 }
 
 func (s *service) CloseRoom(ctx context.Context, staffId int64, roomId int64, tagId int64) error {
@@ -134,7 +134,7 @@ func (s *service) CloseRoom(ctx context.Context, staffId int64, roomId int64, ta
 	}
 
 	payload, _ := json.Marshal(event)
-	return s.redis.Publish(ctx, types.RedisKeyEventClient, payload)
+	return s.redis.Publish(ctx, types.RedisKeyEventClient, payload).Err()
 }
 
 func (s *service) UpdateRoomScore(ctx context.Context, roomId int64, score int32) error {
@@ -227,7 +227,7 @@ func (s *service) TransferRoom(ctx context.Context, staffId, roomId, toStaffId i
 		},
 	}
 	payload, _ := json.Marshal(event)
-	return s.redis.Publish(ctx, types.RedisKeyEventClient, payload)
+	return s.redis.Publish(ctx, types.RedisKeyEventClient, payload).Err()
 }
 
 func (s *service) GetMemberAvailableRoom(ctx context.Context, memberId int64) (model.Room, error) {

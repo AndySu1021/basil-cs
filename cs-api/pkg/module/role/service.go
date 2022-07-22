@@ -35,7 +35,7 @@ func (s *service) UpdateRole(ctx context.Context, params model.UpdateRoleParams)
 	if err := s.repo.UpdateRole(ctx, params); err != nil {
 		return err
 	}
-	return s.redis.Del(ctx, fmt.Sprintf("role:%d", params.ID))
+	return s.redis.Del(ctx, fmt.Sprintf("role:%d", params.ID)).Err()
 }
 
 func (s *service) DeleteRole(ctx context.Context, roleId int64) error {

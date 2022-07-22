@@ -10,13 +10,15 @@ import (
 	"cs-api/pkg/types"
 	"database/sql"
 	"encoding/json"
+	"errors"
 	"fmt"
-	"github.com/AndySu1021/go-util/errors"
+	errTool "github.com/AndySu1021/go-util/errors"
 	ginTool "github.com/AndySu1021/go-util/gin"
 	"github.com/AndySu1021/go-util/helper"
 	ifaceTool "github.com/AndySu1021/go-util/interface"
 	"github.com/AndySu1021/go-util/logger"
 	"github.com/gin-gonic/gin"
+	"github.com/go-redis/redis/v8"
 	"github.com/rs/xid"
 	"time"
 )
@@ -117,8 +119,8 @@ func (s *service) SetClientInfo(clientType pkg.ClientType) gin.HandlerFunc {
 		}
 
 		redisKey := getRedisKey(token, clientType)
-		result, err := s.redis.Get(c.Request.Context(), redisKey)
-		if err != nil || result == "" {
+		result, err := s.redis.Get(c.Request.Context(), redisKey).Result()
+		if err != nil {
 			ginTool.ErrorAuth(c)
 			c.Abort()
 			return
@@ -142,7 +144,7 @@ func (s *service) GetClientInfo(ctx context.Context, clientType pkg.ClientType) 
 	ctxKey := fmt.Sprintf("%s_info", clientType)
 	clientInfo, ok := ctx.Value(ctxKey).(pkg.ClientInfo)
 	if clientInfo.ID == 0 || !ok {
-		return pkg.ClientInfo{}, errors.ErrorAuth
+		return pkg.ClientInfo{}, errTool.ErrorAuth
 	}
 
 	return clientInfo, nil
@@ -159,15 +161,15 @@ func (s *service) CheckPermission(permission string) gin.HandlerFunc {
 		}
 
 		roleKey := fmt.Sprintf("role:%d", info.RoleID)
-		result, err := s.redis.Get(ctx, roleKey)
-		if err != nil {
+		result, err := s.redis.Get(ctx, roleKey).Result()
+		if err != nil && !errors.Is(err, redis.Nil) {
 			ginTool.Error(c, err)
 			c.Abort()
 			return
 		}
 
 		var role model.Role
-		if result != "" {
+		if !errors.Is(err, redis.Nil) {
 			if err = json.Unmarshal([]byte(result), &role); err != nil {
 				ginTool.Error(c, err)
 				c.Abort()
@@ -186,7 +188,7 @@ func (s *service) CheckPermission(permission string) gin.HandlerFunc {
 				c.Abort()
 				return
 			}
-			if err = s.redis.SetEX(ctx, roleKey, roleBytes, 24*time.Hour); err != nil {
+			if err = s.redis.SetEX(ctx, roleKey, roleBytes, 24*time.Hour).Err(); err != nil {
 				ginTool.Error(c, err)
 				c.Abort()
 				return

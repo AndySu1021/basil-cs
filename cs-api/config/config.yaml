@@ -46,7 +46,9 @@ database:
 
 # Redis config
 redis:
-  cluster_mode: false
-  addresses: "localhost:6379"
+  # type 可為 single(單點), sentinel(哨兵), cluster(集群)
+  type: single
+  address:
+    - "localhost:6379"
   password:
   db: 0

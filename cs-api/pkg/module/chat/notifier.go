@@ -271,9 +271,9 @@ func (n *Notifier) send(info pkg.ClientEventInfo, needStore bool) {
 	}
 
 	byteInfo, _ := json.Marshal(info)
-	err := n.redis.Publish(context.Background(), types.RedisKeyEventClient, byteInfo)
+	err := n.redis.Publish(context.Background(), types.RedisKeyEventClient, byteInfo).Err()
 	if err != nil {
-		logger.Logger.Errorf("publish message to redis error: %s", err.Error())
+		logger.Logger.Errorf("publish message to redis error: %s", err)
 		return
 	}
 }

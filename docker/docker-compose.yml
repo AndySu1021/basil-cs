@@ -54,16 +54,18 @@ services:
 #      - "6380:6379"
 #    command: redis-server --slaveof cs-redis 6379
 #    depends_on:
-#      - cs-redis
+#     - cs-redis
 #    tty: true
 #    volumes:
-#      - ./redis/data/slave:/data
+#     - ./redis/data/slave:/data
 #    networks:
-#      - backend
+#     - backend
 #
 #  cs-redis-sentinel:
 #    container_name: cs-redis-sentinel
 #    image: redis:5.0.9-buster
+#    ports:
+#      - "26379:26379"
 #    command: redis-sentinel /conf/sentinel.conf
 #    restart: always
 #    depends_on:

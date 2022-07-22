@@ -67,12 +67,12 @@ func (s *service) UpdateStaffServingStatus(ctx context.Context, staffId int64, s
 		return s.redis.ZAdd(ctx, types.RedisKeyStaffDispatch, &redis.Z{
 			Score:  float64(roomCount),
 			Member: staffId,
-		})
+		}).Err()
 	case types.StaffServingStatusClosed:
 		return s.redis.ZAdd(ctx, types.RedisKeyStaffDispatch, &redis.Z{
 			Score:  -1,
 			Member: staffId,
-		})
+		}).Err()
 	}
 
 	return nil

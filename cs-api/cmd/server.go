@@ -57,8 +57,8 @@ func runServer(_ *cobra.Command, _ []string) {
 	app := fx.New(
 		fx.NopLogger,
 		options,
-		redis.Options,
 		module.Options,
+		redis.Options,
 	)
 
 	exitCode := 0

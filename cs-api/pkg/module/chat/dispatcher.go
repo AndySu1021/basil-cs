@@ -4,6 +4,7 @@ import (
 	"context"
 	iface "cs-api/pkg/interface"
 	"cs-api/pkg/types"
+	"errors"
 	ifaceTool "github.com/AndySu1021/go-util/interface"
 	"github.com/go-redis/redis/v8"
 	"strconv"
@@ -41,11 +42,11 @@ func (sd *StaffDispatcher) unregister(staffId int64) {
 func (sd *StaffDispatcher) dispatch(staffId int64) (int64, error) {
 	ctx := context.Background()
 	// 如果用戶不小心斷線重新連回來時，優先找回原本的客服
-	idx, err := sd.redis.ZRank(ctx, types.RedisKeyStaffDispatch, strconv.FormatInt(staffId, 10))
-	if err != nil {
+	_, err := sd.redis.ZRank(ctx, types.RedisKeyStaffDispatch, strconv.FormatInt(staffId, 10)).Result()
+	if err != nil && !errors.Is(err, redis.Nil) {
 		return 0, err
 	}
-	if idx != -1 {
+	if !errors.Is(err, redis.Nil) {
 		return staffId, nil
 	}
 
@@ -55,11 +56,11 @@ func (sd *StaffDispatcher) dispatch(staffId int64) (int64, error) {
 		Max:    strconv.FormatInt(sd.maxMember, 10),
 		Offset: 0,
 		Count:  1,
-	})
-	if err != nil {
+	}).Result()
+	if err != nil && !errors.Is(err, redis.Nil) {
 		return 0, err
 	}
-	if len(result) == 0 {
+	if errors.Is(err, redis.Nil) {
 		return 0, nil
 	}
 
@@ -81,7 +82,7 @@ func (sd *StaffDispatcher) removeRoom(staffId int64) error {
 			Score:  -1,
 			Member: staffId,
 		}},
-	})
+	}).Err()
 }
 
 func NewStaffDispatcher(redis ifaceTool.IRedis, lua iface.ILuaScript, csConfigSvc iface.ICsConfigService) *StaffDispatcher {

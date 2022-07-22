@@ -38,8 +38,8 @@ func (h *handler) UploadFile(c *gin.Context) {
 	}
 
 	redisKey := fmt.Sprintf("token:%s:%s", req.Type, token)
-	payload, err := h.redis.Get(c.Request.Context(), redisKey)
-	if err != nil || payload == "" {
+	_, err := h.redis.Get(c.Request.Context(), redisKey).Result()
+	if err != nil {
 		ginTool.ErrorAuth(c)
 		return
 	}
