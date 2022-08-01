@@ -3,7 +3,7 @@ module cs-api
 go 1.18
 
 require (
-	github.com/AndySu1021/go-util v1.1.11
+	github.com/AndySu1021/go-util v1.1.12
 	github.com/Masterminds/squirrel v1.5.3
 	github.com/gin-gonic/gin v1.7.7
 	github.com/go-redis/redis/v8 v8.11.5
