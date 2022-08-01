@@ -1,7 +1,7 @@
 package mock
 
 import (
-	iface "cs-api/pkg/interface"
+	iface "cs-api/internal/interface"
 	"github.com/golang/mock/gomock"
 	"testing"
 )

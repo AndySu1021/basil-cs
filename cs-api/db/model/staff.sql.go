@@ -11,7 +11,7 @@ import (
 	"encoding/json"
 	"time"
 
-	"cs-api/pkg/types"
+	"cs-api/internal/types"
 )
 
 const createStaff = `-- name: CreateStaff :exec

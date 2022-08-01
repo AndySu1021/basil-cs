@@ -10,7 +10,7 @@ import (
 	"database/sql"
 	"time"
 
-	"cs-api/pkg/types"
+	"cs-api/internal/types"
 )
 
 const acceptRoom = `-- name: AcceptRoom :exec

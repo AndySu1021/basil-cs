@@ -9,7 +9,7 @@ import (
 	"encoding/json"
 	"time"
 
-	"cs-api/pkg/types"
+	"cs-api/internal/types"
 	"github.com/shopspring/decimal"
 )
 

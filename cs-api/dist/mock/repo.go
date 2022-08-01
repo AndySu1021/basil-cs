@@ -2,8 +2,8 @@ package mock
 
 import (
 	"cs-api/db/model"
-	iface "cs-api/pkg/interface"
-	"cs-api/pkg/types"
+	iface "cs-api/internal/interface"
+	"cs-api/internal/types"
 	"database/sql"
 	"encoding/json"
 	"errors"

@@ -9,7 +9,7 @@ import (
 	"context"
 	"time"
 
-	"cs-api/pkg/types"
+	"cs-api/internal/types"
 )
 
 const createTag = `-- name: CreateTag :exec
